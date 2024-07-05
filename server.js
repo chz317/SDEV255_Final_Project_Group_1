@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 8081;
 
 app.get('/', async (req, res) => {
+  const username = req.query.username || 'the-mega-byte' || 'kevincripe';
   try {
     const result = await axios.get(
       `https://api.github.com/users/${username}/repos`
