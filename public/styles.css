@@ -11,15 +11,13 @@ body{
     margin: 0;
     padding: 0;
     text-decoration: none;
-    color:burlywood;
+    color:rgb(235, 193, 140);
   }
 
   /* nav & footer styles */
   nav{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 60px;
-    padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
     text-transform: uppercase;
   }
@@ -35,8 +33,12 @@ body{
   nav h1{
     font-size: 3em;
   }
-  nav p, nav a{
-    color: #777;
+  nav p{
+    color: rgb(87, 63, 33);
+    font-weight: 300;
+  }
+  nav a{
+    color: rgba(77, 63, 33, 0.76);
     font-weight: 300;
   }
   footer{
@@ -46,6 +48,7 @@ body{
   }
   h2{
     margin-bottom: 40px;
+    color: rgb(73, 33, 18);
   }
   h3{
     text-transform: capitalize;
