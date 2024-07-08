@@ -2,7 +2,7 @@ const express = require('express');
 
 // express app
 const app = express();
-app.use(morgan('dev'));
+
 // listen for requests
 app.listen(3000);
 
@@ -24,6 +24,8 @@ app.use((req, res, next) => {
   console.log('in the next middleware');
   next();
 });
+
+app.use(morgan('dev'));
 
 app.use((req, res, next) => {
   res.locals.path = req.path;
