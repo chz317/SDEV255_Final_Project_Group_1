@@ -21,7 +21,6 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  console.log('in the next middleware');
   next();
 });
 
