@@ -1,13 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
-const mongoose = require('mongoose')
-const Course = require('./models/course')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
+const Course = require('./models/course');
 
 // express app
 const app = express();
 
 // connect to mongoDB
-const dbURI = 'mongodb+srv://projectTeamOne:DjN6J8mONuQn0iF3@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1';
+const dbURI = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1`;
 
 mongoose.connect(dbURI)
   .then(result => app.listen(3000))
