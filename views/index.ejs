@@ -10,10 +10,10 @@
 
     <% if (courses.length > 0) { %>
       <% courses.forEach(course => { %>
-
+        <a class="single" href="/courses/<%= course._id %>">
         <h3 class="title"><%= course.title %></h3>
         <p class="description"><%= course.description %></p>
-
+      </a>
       <% }) %>
     <% } else { %>
       <p>There are no courses to display...</p>
