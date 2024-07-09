@@ -22,11 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 
-app.use((req, res, next) => {
-  res.locals.path = req.path;
-  next();
-});
-
 // routes
 app.get('/', (req, res) => {
   res.redirect('/courses');
@@ -37,19 +32,20 @@ app.get('/about', (req, res) => {
 });
 
 // course routes
-app.get('/courses/create', (req, res) => {
-  res.render('create', { title: 'Create a new course' });
-});
-
 app.get('/courses', (req, res) => {
   Course.find().sort({ createdAt: -1 })
     .then((result) => {
-      res.render('index', { courses: result, title: 'All Courses' });
+      res.render('index', { title: 'All Courses', courses: result });
     })
     .catch(err => {
       console.log(err);
     });
 });
+
+app.get('/courses/create', (req, res) => {
+  res.render('create', { title: 'Create a new course' });
+});
+
 
 app.post('/courses', (req, res) => {
   // console.log(req.body);
