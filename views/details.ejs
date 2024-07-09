@@ -7,9 +7,12 @@
   <div class="details content">
     <h2><%= course.title %></h2>
     <div class="content">
-      <p><%= course.body %></p>
+      <p><%= course.description %></p><br>
+      <p class="subject"><%= course.subject %></p><br>
+      <p><%= course.credits %></p><br>
     </div>
-    <a class="delete" data-doc="<%= course._id %>">delete</a>
+    <a class="edit" data-doc="<%= course._id %>">Edit Course</a>
+    <a class="delete" data-doc="<%= course._id %>">Delete Course</a>
   </div>
 
   <%- include("./partials/footer.ejs") %>

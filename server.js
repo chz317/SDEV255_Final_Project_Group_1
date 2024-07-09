@@ -32,6 +32,8 @@ app.get('/about', (req, res) => {
 });
 
 // course routes
+
+// Get courses main route
 app.get('/courses', (req, res) => {
   Course.find().sort({ createdAt: -1 })
     .then((result) => {
@@ -42,40 +44,43 @@ app.get('/courses', (req, res) => {
     });
 });
 
+// Get courses/create form page
 app.get('/courses/create', (req, res) => {
   res.render('create', { title: 'Create a new course' });
 });
 
-
+// POST REQUEST where courses are saved from create form
+// form uses POST method to call this route
 app.post('/courses', (req, res) => {
-  // console.log(req.body);
   const course = new Course(req.body);
 
   course.save()
     .then((result) => {
       res.redirect('/courses');
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
 
+// Get course by its id
 app.get('/courses/:id', (req, res) => {
   const id = req.params.id;
   Course.findById(id)
-    .then(result => {
-      res.render('details', { course: result, title: 'course Details' });
+    .then((result) => {
+      res.render('details', { course: result, title: 'Course Details' });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 });
 
+// Delete a course by its id
 app.delete('/courses/:id', (req, res) => {
   const id = req.params.id;
   
   Course.findByIdAndDelete(id)
-    .then(result => {
+    .then((result) => {
       res.json({ redirect: '/courses' });
     })
     .catch(err => {
