@@ -1,53 +1,90 @@
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose')
+const Course = require('./models/course')
 
 // express app
 const app = express();
 
-// listen for requests
-app.listen(3000);
+// connect to mongoDB
+const dbURI = 'mongodb+srv://projectTeamOne:DjN6J8mONuQn0iF3@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1';
+
+mongoose.connect(dbURI)
+  .then(result => app.listen(3000))
+  .catch(err => console.log(err));
 
 // register view engine
 app.set('view engine', 'ejs');
 
 // middleware & static files
 app.use(express.static('public'));
-
-app.use((req, res, next) => {
-  console.log('new request made:');
-  console.log('host: ', req.hostname);
-  console.log('path: ', req.path);
-  console.log('method: ', req.method);
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log('in the next middleware');
-  next();
-});
-
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
 
 app.use((req, res, next) => {
   res.locals.path = req.path;
   next();
 });
 
+// routes
 app.get('/', (req, res) => {
-  const courses = [
-    {title: 'Course 1', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    {title: 'Course 2', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    {title: 'Course 3', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  ];
-  res.render('index', { title: 'Home', courses });
+  res.redirect('/courses');
 });
 
 app.get('/about', (req, res) => {
   res.render('about', { title: 'About' });
 });
 
+// course routes
 app.get('/courses/create', (req, res) => {
   res.render('create', { title: 'Create a new course' });
+});
+
+app.get('/courses', (req, res) => {
+  Course.find().sort({ createdAt: -1 })
+    .then((result) => {
+      res.render('index', { courses: result, title: 'All Courses' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.post('/courses', (req, res) => {
+  // console.log(req.body);
+  const course = new Course(req.body);
+
+  course.save()
+    .then((result) => {
+      res.redirect('/courses');
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.get('/courses/:id', (req, res) => {
+  const id = req.params.id;
+  Course.findById(id)
+    .then(result => {
+      res.render('details', { course: result, title: 'course Details' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.delete('/courses/:id', (req, res) => {
+  const id = req.params.id;
+  
+  Course.findByIdAndDelete(id)
+    .then(result => {
+      res.json({ redirect: '/courses' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 // 404 page
