@@ -87,8 +87,8 @@ app.delete('/courses/:id', (req, res) => {
     });
 });
 
-// Edit course
-app.get('/edit/', (req, res) => {
+// Edit routes
+app.get('/edit', (req, res) => {
   res.render('edit', { title: 'Edit' });
 });
 
