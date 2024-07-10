@@ -75,16 +75,23 @@ app.get('/courses/:id', (req, res) => {
 });
 
 // Update a course by its id
-app.put('/courses/:id', (req, res) => {
-  const id = req.params.id;
-  
-  Course.findByIdAndUpdate(id)
-    .then((result) => {
-      res.json({ redirect: '/courses' });
+app.put('/courses/:id', async (req, res) => {
+  const course = Course(req.body);
+  await Course.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .then((course) => {
+      if (!course) {
+        return res.status(404).send();
+      }
+      res.send(course);
     })
     .catch(err => {
-      console.log(err);
+      res.status(500).send(err);
     });
+  //Course.updateOne({_id: req.params.id}, req.body).then(response => {
+  //  res.status(200).send(response);
+  //}).catch(err => {
+  //  res.status(500).send(err);
+  //});
 });
 
 // Delete a course by its id
