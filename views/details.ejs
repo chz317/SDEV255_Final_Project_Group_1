@@ -4,14 +4,14 @@
 <body>
   <%- include("./partials/nav.ejs") %>
 
-  <div class="details content">
+  <div class="details content" contenteditable="true">
     <h2><%= course.title %></h2>
     <div class="content">
       <p><%= course.description %></p><br>
       <p class="subject"><%= course.subject %></p><br>
       <p><%= course.credits %></p><br>
     </div>
-    <a class="edit" data-doc="<%= course._id %>">Edit Course</a>
+    <a class="Save" data-doc="<%= course._id %>">Save Changes</a>
     <a class="delete" data-doc="<%= course._id %>">Delete Course</a>
   </div>
 
