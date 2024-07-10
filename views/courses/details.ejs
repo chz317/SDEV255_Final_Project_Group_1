@@ -1,8 +1,8 @@
 <html lang="en">
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 
 <body>
-  <%- include("./partials/nav.ejs") %>
+  <%- include("../partials/nav.ejs") %>
 
   <div class="details content">
     <h2><%= course.title %></h2>
@@ -11,11 +11,11 @@
       <p class="subject"><%= course.subject %></p><br>
       <p><%= course.credits %></p><br>
     </div>
-    <a class="edit" href="" data-doc="<%= course._id %>">Edit</a>
+    <a class="edit" data-doc="<%= course._id %>">Edit</a>
     <a class="delete" data-doc="<%= course._id %>">Delete Course</a>
   </div>
 
-  <%- include("./partials/footer.ejs") %>
+  <%- include("../partials/footer.ejs") %>
   
   <script>
     const trashcan = document.querySelector('a.delete');
