@@ -33,8 +33,6 @@ app.get('/about', (req, res) => {
 });
 
 // course routes
-
-// Get courses main route
 app.get('/courses', (req, res) => {
   Course.find().sort({ createdAt: -1 })
     .then((result) => {
@@ -81,19 +79,6 @@ app.delete('/courses/:id', (req, res) => {
   const id = req.params.id;
   
   Course.findByIdAndDelete(id)
-    .then((result) => {
-      res.json({ redirect: '/courses' });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-// Update a course by its id
-app.put('/courses/:id', (req, res) => {
-  const id = req.params.id;
-  
-  Course.findByIdAndUpdate(id)
     .then((result) => {
       res.json({ redirect: '/courses' });
     })

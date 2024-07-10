@@ -4,14 +4,14 @@
 <body>
   <%- include("./partials/nav.ejs") %>
 
-  <div class="details content" contenteditable="true">
+  <div class="details content">
     <h2><%= course.title %></h2>
     <div class="content">
       <p><%= course.description %></p><br>
       <p class="subject"><%= course.subject %></p><br>
       <p><%= course.credits %></p><br>
     </div>
-    <a class="save" data-doc="<%= course._id %>">Save Changes</a>
+    <a class="edit" href="/edit" data-doc="<%= course._id %>">Edit</a>
     <a class="delete" data-doc="<%= course._id %>">Delete Course</a>
   </div>
 
@@ -31,20 +31,6 @@
       .catch(err => console.log(err));
     });
 
-    // put method to update a course. course details fields are editable
-    const saveChanges = document.querySelector('a.save');
-
-    saveChanges.addEventListener('click', (e) => {
-      const endpoint = `/courses/${saveChanges.dataset.doc}`;
-      console.log(endpoint)
-      fetch(endpoint, {
-        method: 'PUT',
-      })
-      .then(response => response.json())
-      .then(data => window.location.href = data.redirect)
-      .catch(err => console.log(err));
-    });
-    
   </script>
 </body>
 </html>
