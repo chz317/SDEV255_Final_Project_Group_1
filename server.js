@@ -74,6 +74,19 @@ app.get('/courses/:id', (req, res) => {
     });
 });
 
+// Update a course by its id
+app.put('/courses/:id', (req, res) => {
+  const id = req.params.id;
+  
+  Course.findByIdAndUpdate(id)
+    .then((result) => {
+      res.json({ redirect: '/courses' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 // Delete a course by its id
 app.delete('/courses/:id', (req, res) => {
   const id = req.params.id;
@@ -85,11 +98,6 @@ app.delete('/courses/:id', (req, res) => {
     .catch(err => {
       console.log(err);
     });
-});
-
-// Edit routes
-app.get('/edit', (req, res) => {
-  res.render('edit', { title: 'Edit' });
 });
 
 // 404 page
