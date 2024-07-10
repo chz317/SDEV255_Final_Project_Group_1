@@ -66,14 +66,14 @@ body{
   }
 
   /* details styles */
-  .save{
+  .edit{
     top: 0;
     right: 0;
     border-radius: 50%;
     padding: 12px;
     font-size: 25px;
   }
-  .save:hover{
+  .edit:hover{
     cursor: pointer;
     box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
   }
@@ -126,4 +126,3 @@ body{
     font-size: 1.2em;
     cursor: pointer;
   }
-  
