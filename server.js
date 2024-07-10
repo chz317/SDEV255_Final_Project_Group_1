@@ -87,6 +87,11 @@ app.delete('/courses/:id', (req, res) => {
     });
 });
 
+// Edit course
+app.get('/edit/', (req, res) => {
+  res.render('edit', { title: 'Edit' });
+});
+
 // 404 page
 app.use((req, res) => {
   res.status(404).render('404', { title: '404' });

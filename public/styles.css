@@ -126,3 +126,32 @@ body{
     font-size: 1.2em;
     cursor: pointer;
   }
+
+    /* edit styles */
+    .edit-course form{
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .edit-course input,
+    .edit-course textarea{
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+    .edit-course label{
+      display: block;
+      margin-top: 24px;
+    }
+    textarea{
+      height: 120px;
+    }
+    .edit-course button{
+      margin-top: 20px;
+      background: crimson;
+      color: white;
+      padding: 6px;
+      border: 0;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
