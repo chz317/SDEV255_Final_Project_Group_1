@@ -89,6 +89,19 @@ app.delete('/courses/:id', (req, res) => {
     });
 });
 
+// Update a course by its id
+app.put('/courses/:id', (req, res) => {
+  const id = req.params.id;
+  
+  Course.findByIdAndUpdate(id)
+    .then((result) => {
+      res.json({ redirect: '/courses' });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 // 404 page
 app.use((req, res) => {
   res.status(404).render('404', { title: '404' });
