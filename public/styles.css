@@ -11,7 +11,7 @@ body{
     margin: 0;
     padding: 0;
     text-decoration: none;
-    color:rgb(235, 193, 140);
+    color:rgb(235, 169, 90);
   }
 
   /* nav & footer styles */
@@ -36,6 +36,7 @@ body{
   nav p{
     color: rgb(87, 63, 33);
     font-weight: 300;
+    font-size: smaller;
   }
   nav a{
     color: rgba(77, 63, 33, 0.76);
@@ -66,14 +67,14 @@ body{
   }
 
   /* details styles */
-  .edit{
+  .update{
     top: 0;
     right: 0;
     border-radius: 50%;
     padding: 12px;
     font-size: 25px;
   }
-  .edit:hover{
+  .update:hover{
     cursor: pointer;
     box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
   }
