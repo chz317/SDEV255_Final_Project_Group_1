@@ -37,6 +37,29 @@ const course_create_post = (req, res) => {
         })
 }
 
+const course_update = (req, res) => {
+    if(!req.body) {
+        return res.status(400)
+        .send({message: "Data to update can not be empty"})
+    }
+
+    const id = req.params.id;
+    //console.log(JSON.stringify(req.body));
+    Course.findByIdAndUpdate(id, req.body)
+    .then(data => {
+        if(!data) {
+            res.status(404).send({message: `Cannot Update User ${id}.`});
+        }
+        else {
+            res.send(data);
+        }
+    })
+    .catch(err => {
+        res.status(500).send({message: "Error Updating User Information"});
+    })
+
+}
+
 const course_delete = (req, res) => {
     const id = req.params.id;
     Course.findByIdAndDelete(id)
@@ -53,5 +76,6 @@ module.exports = {
     course_details,
     course_create_get,
     course_create_post,
+    course_update,
     course_delete
 }
