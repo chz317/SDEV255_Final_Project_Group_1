@@ -9,6 +9,10 @@ const courseRoutes = require('./routes/courseRoutes');
 const authRoutes = require('./routes/authRoutes');
 const User = require('./models/user');
 
+const path = require('path');
+app.set('views', path.join(__dirname, 'views'));
+
+
 const app = express();
 
 // Connect to MongoDB
