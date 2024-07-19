@@ -3,8 +3,17 @@
    <h1>SDEV255 Final Project</h1></a>
      <p>By Noah Ledbetter, Kevin Cripe, and Joseph Cheesebourough</p>
     </div>
-     <center> <h3><a href="/">Courses</a> <br></h3>
+     <center> 
+      <h3><a href="/">Courses</a> <br></h3>
       <h3><a href="/about">About</a><br></h3>
-     <h3> <a href="/courses/create">New Course</a><br></h3>
+      <% if (user) { %>
+        <% if (user.role === 'teacher') { %>
+            <h3><a href="/courses/create">New Course</a></h3>
+        <% } %>
+        <h3><a href="/logout">Logout</a></h3>
+      <% } else { %>
+        <h3><a href="/login">Login</a></h3>
+        <h3><a href="/register">Register</a></h3>
+      <% } %>
      <center>
   </nav>
