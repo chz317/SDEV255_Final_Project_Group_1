@@ -1,39 +1,58 @@
 const express = require('express');
-const morgan = require('morgan');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const morgan = require('morgan');
 const courseRoutes = require('./routes/courseRoutes');
+const authRoutes = require('./routes/authRoutes');
+const User = require('./models/user');
 
-
-// connect to mongoDB
-const dbURI = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1`;
-
-mongoose.connect(dbURI)
-  .then(result => app.listen(3000))
-  .catch(err => console.log(err));
-
-// express app
 const app = express();
 
-// register view engine
+// Connect to MongoDB
+const dbURI = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1`;
+mongoose.connect(dbURI)
+  .then(result => app.listen(3000, () => console.log('Server started on port 3000')))
+  .catch(err => console.log(err));
+
+// Middleware for parsing request bodies
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Session configuration
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Initialize passport and use session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure passport local strategy
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Register view engine
 app.set('view engine', 'ejs');
 
-// middleware & static files
+// Middleware & static files
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-app.use(express.json())
 
-// routes
-app.get('/', (req, res) => {
-  res.redirect('/courses')
-});
+// Define your routes here
+app.get('/', (req, res) => res.redirect('/courses')); // Redirect to courses page
 
-app.get('/about', (req, res) => {
-  res.render('about', { title: 'About' });
-});
+app.get('/about', (req, res) => res.render('about', { title: 'About' })); // About page
 
-//course routes
+// Authentication routes
+app.use('/', authRoutes);
+
+// Course routes
 app.use('/courses', courseRoutes);
 
 // 404 page
