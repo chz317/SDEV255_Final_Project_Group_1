@@ -4,19 +4,21 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const path = require('path');
+const MongoStore = require('connect-mongo');
 const courseRoutes = require('./routes/courseRoutes');
 const authRoutes = require('./routes/authRoutes');
 const User = require('./models/user');
 
-const app = express();
+const app = express(); 
 
-// connect to mongoDB
-const dbURI = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1`;
+// Connect to MongoDB
+const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@sdev255projectteam1.aw1cgbj.mongodb.net/SDEV255ProjectTeam1`;
 mongoose.connect(dbURI)
-  .then(result => app.listen(3000))
+  .then(result => app.listen(process.env.PORT || 3000))
   .catch(err => console.log(err));
 
-
+// Middleware for parsing request bodies and handling sessions
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -24,7 +26,8 @@ app.use(express.json());
 app.use(session({
   secret: 'your_secret_key',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: dbURI })
 }));
 
 // Initialize passport and use session
@@ -33,6 +36,7 @@ app.use(passport.session());
 
 // Register view engine
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // Ensure this is after app initialization
 
 // Middleware & static files
 app.use(express.static('public'));
@@ -57,5 +61,3 @@ app.use('/courses', courseRoutes);
 app.use((req, res) => {
   res.status(404).render('404', { title: '404' });
 });
-
-app.listen(3000, () => console.log('Server started on port 3000'));
